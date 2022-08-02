@@ -1,0 +1,100 @@
+<?php
+
+if(isset($_POST['name'])){
+  $server = "localhost";
+  $username = "root";
+  $password = "002vaibhav";
+
+  $con = mysqlii_connect($server,$username,$password);
+  
+  if(!$con){
+    die("connection to this database failed due to ". mysqlii_connect_error());
+  }
+//   echo "Success Connecting to the database";
+$Name = $_POST['Name'];
+$Gender = $_POST['Gender'];
+$Address = $_POST['Address'];
+$Email = $_POST['Email'];
+$Pincode = $_POST['Pincode'];
+$Location = $_POST['Location'];
+$Title = $_POST['Title'];
+$Date = $_POST['Date'];
+$ctc = $_POST['ctc'];
+
+
+$sql="INSERT INTO `employee`.`employee` ( `Name`, `Gender`, `Address`, `Email`, `Pincode`, `Location`, `Title`, `Date`, `ctc`, `datesub`) VALUES ( '$Name', '$Gender', '$Address', '$Email', '$Pincode', '$Location', '$Title', '$Date', '$ctc', current_timestamp());";
+echo $sql;
+// Execute the query
+if($con->query($sql) == true){
+    // echo "Successfully inserted";
+
+    // Flag for successful insertion
+    $insert = true;
+}
+else{
+    echo "ERROR: $sql <br> $con->error";
+}
+
+// Close the database connection
+$con->close();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Employee Data</title>
+</head>
+<body>
+    
+    <div class="container">
+        <form action="">
+            <h1 class="main_heading">Welcome to Delhi Metro Rail corporation ltd.</h1>
+            <h2>Employee Information</h2>
+            <p>Name:* <input type="text" name="Name" placeholder="Vaibhav Malhotra"  required> </p>
+        <fieldset><!--Puts in a box-->
+            <legend>Gender</legend>
+                <p>
+                Male <input type="radio" name="Gender" id="male">
+                Female <input type="radio" name="Gender" id="female">
+                </p>
+        </fieldset>
+        <p>Address: <textarea name="Address" placeholder="Enter your Address" id="address" cols="80" rows="5"></textarea></p>
+        <p>Email: <input type="email" name="Email" id="email" ></p>
+        <p>Pincode: <input type="number" name="Pincode" id="Pincode"></p>
+    
+        <h2>Job Information</h2>
+        <!-- <P>Cards Accepted:</P> -->
+        <!-- <img src="cardicon.jpg"> -->
+    
+        <p class="select">Office Location:
+            <select name="Location" id="Location">
+                <option value="">--Select where is your office--</option>
+                <option value="Metro bhawan">Metro bhawan</option>
+                <option value="Mayur Vihar">Mayur Vihar</option>
+                <option value="Shastri Park">Shastri Park</option>
+                
+            </select>
+        </p>
+        <p>
+            Title <input type="text" name="Title" id="title">
+        </p>
+        <p>
+            Start Date: <input type="Date" name="Start_Date" id="Start_Date">
+        </p>
+        <p>
+            C.T.C <input type="number" name="ctc" id="ctc">
+            <button class="btn">Submit</button>
+            
+        </p>
+        <!-- <p >
+            <input  class="selector" type="submit" value="Submit"></p> -->
+        </form>
+        </div>
+    <script src="index.js"></script>
+</body>
+</html>
